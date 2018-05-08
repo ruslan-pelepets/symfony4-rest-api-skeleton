@@ -59,4 +59,22 @@ class AddressRepository extends ServiceEntityRepository
 			->getQuery()
 			->getOneOrNullResult();
 	}
+
+	/**
+	 * @param User $user
+	 * @return mixed
+	 * @throws \Doctrine\ORM\NonUniqueResultException
+	 */
+	public function findDefaultPub(User $user)
+	{
+		return $this->createQueryBuilder('a')
+			->select('a.id', 'a.city', 'a.country', 'a.street', 'a.zipCode')
+			->where('a.user = :userId')
+			->andWhere('a.user = :userId')
+			->setParameter('userId', $user->getId())
+			->orderBy('a.id', 'ASC')
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
+	}
 }

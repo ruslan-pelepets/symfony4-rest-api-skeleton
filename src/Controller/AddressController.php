@@ -121,11 +121,30 @@ class AddressController extends FOSRestController
 	}
 
 	/**
-	 * @Rest\Get("/address/{id}")
+	 * @Rest\Get("/address/first")
+	 */
+	public function firstAction()
+	{
+		$em = $this->getDoctrine()->getManager();
+		$address = $em->getRepository(Address::class)->findDefaultPub(
+			$this->getUser()
+		);
+		if(!$address) {
+			$view = $this->view(null, 404);
+			return $this->handleView($view);
+		}
+
+		$view = $this->view($address, 200);
+		return $this->handleView($view);
+	}
+
+	/**
+	 * @Rest\View
+	 * @Rest\Get("/address/{id}", requirements={"id" = "\d+"}, defaults={"id" = 1})
 	 * @param int $id
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
-	public function getAction(int $id)
+	public function oneAction(int $id)
 	{
 		$em = $this->getDoctrine()->getManager();
 		$address = $em->getRepository(Address::class)->findByUserIdPub(
@@ -171,5 +190,4 @@ class AddressController extends FOSRestController
 		$view = $this->view(null, 200);
 		return $this->handleView($view);
 	}
-
 }

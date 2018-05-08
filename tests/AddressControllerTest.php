@@ -121,4 +121,12 @@ class AddressControllerTest extends BaseTest
 		]);
 		$this->assertEquals(200, $response->getStatusCode());
 	}
+
+	public function testGetDefault()
+	{
+		$response = $this->client->get('/api/address/first', [
+			'auth' => $this->auth,
+		]);
+		$this->assertEquals(200, $response->getStatusCode());
+	}
 }
