@@ -1,4 +1,4 @@
-# Symfony4ApiRest
+# Symfony4 Rest Api
 
 Simple example of an API REST with http basic authorization with Symfony 4
 
